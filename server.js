@@ -14,8 +14,8 @@ const upload = multer({ storage: storage });
 // Dimensions to resize to
 const dimensions = [
     { width: 100, height: 100 },
-    { width: 200, height: 200 },
-    { width: 300, height: 300 },
+    { width: 200, aspectRatio: 16/9 },
+    { width: 300, aspectRatio: 4/3 },
 ];
 
 app.get('/', (req, res) => {
@@ -27,12 +27,22 @@ app.post('/upload', upload.single('image'), async (req, res) => {
     const resizedImages = [];
 
     for (const dimension of dimensions) {
+        let resizeOptions = {};
+
+        if (dimension.aspectRatio) {
+            resizeOptions.width = dimension.width;
+            resizeOptions.height = Math.round(dimension.width / dimension.aspectRatio);
+        } else {
+            resizeOptions.width = dimension.width;
+            resizeOptions.height = dimension.height;
+        }
+
         const resizedBuffer = await sharp(originalImage)
-            .resize(dimension.width, dimension.height)
+            .resize(resizeOptions.width, resizeOptions.height)
             .toBuffer();
 
         const size = (resizedBuffer.length / 1024).toFixed(2); // size in KB
-        resizedImages.push({ buffer: resizedBuffer, size, dimension });
+        resizedImages.push({ buffer: resizedBuffer, size, dimension: resizeOptions });
     }
 
     res.send(`
