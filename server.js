@@ -13,9 +13,12 @@ const upload = multer({ storage: storage });
 
 // Dimensions to resize to
 const dimensions = [
-    { width: 100, height: 100 },
-    { width: 200, aspectRatio: 16/9 },
-    { width: 300, aspectRatio: 4/3 },
+    { width: 2560, aspectRatio: 32/9 },
+    { width: 1280, aspectRatio: 16/9 },
+    { width: 1098, aspectRatio: 3/4 },
+    { width: 600, height: 338 },
+    { width: 1080, aspectRatio: 1/1 },
+    { width: 1080, aspectRatio: 9/16 },
 ];
 
 app.get('/', (req, res) => {
