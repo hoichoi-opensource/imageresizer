@@ -19,7 +19,7 @@ A simple Node.js application to upload images, resize them to specified dimensio
 1. Clone the repository:
 
 ```bash
-git clone [YOUR_GITHUB_REPOSITORY_URL]
+git clone https://github.com/hoichoi-opensource/imageresizer.git
 cd image-resizer
 ```
 
