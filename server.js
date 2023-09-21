@@ -42,7 +42,8 @@ app.post("/upload", upload.single("image"), async (req, res) => {
       resizeOptions.height = dimension.height;
     }
 
-    const resizedBuffer = await sharp(originalImage)
+    const resizedBufferWebp = await sharp(originalImage)
+      .webp()
       .resize({
         width: resizeOptions.width,
         height: resizeOptions.height,
@@ -50,10 +51,21 @@ app.post("/upload", upload.single("image"), async (req, res) => {
       })
       .toBuffer();
 
-    const size = (resizedBuffer.length / 1024).toFixed(2); // size in KB
+    const resizedBufferAvif = await sharp(originalImage)
+      .avif()
+      .resize({
+        width: resizeOptions.width,
+        height: resizeOptions.height,
+        fit: "inside",
+      })
+      .toBuffer();
+
+    const sizeWebP = (resizedBufferWebp.length / 1024).toFixed(2); // size in KB
+    const sizeAvif = (resizedBufferAvif.length / 1024).toFixed(2); // size in KB
     resizedImages.push({
-      buffer: resizedBuffer,
-      size,
+      buffer: [resizedBufferWebp, resizedBufferAvif],
+      sizeWebP,
+      sizeAvif,
       dimension: resizeOptions,
     });
   }
@@ -64,12 +76,15 @@ app.post("/upload", upload.single("image"), async (req, res) => {
           .map(
             (img) => `
             <div>
-                <h3>${img.dimension.width}x${img.dimension.height} - ${
-              img.size
-            } KB</h3>
-                <img src="data:image/png;base64,${img.buffer.toString(
+                <h3>${img.dimension.width}x${img.dimension.height} - WEBP ${
+              img.sizeWebP
+            } KB AVIF ${img.sizeAvif}</h3>
+                <img src="data:image/webp;base64,${img.buffer[0].toString(
                   "base64"
-                )}" alt="Resized Image">
+                )}" alt="Resized Image WebP">
+                <img src="data:image/avif;base64,${img.buffer[1].toString(
+                  "base64"
+                )}" alt="Resized Image Avif">
             </div>
         `
           )
