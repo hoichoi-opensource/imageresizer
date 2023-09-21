@@ -46,7 +46,7 @@ app.post("/upload", upload.single("image"), async (req, res) => {
       .resize({
         width: resizeOptions.width,
         height: resizeOptions.height,
-        fit: "fill",
+        fit: "inside",
       })
       .toBuffer();
 
