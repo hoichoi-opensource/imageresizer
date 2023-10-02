@@ -49,5 +49,5 @@ Visit `http://localhost:3000` in your browser to access the application.
 
 Pull requests are welcome.  Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
 
-Checkout the current issues as well to start .
+Checkout the current [issues](https://github.com/hoichoi-opensource/imageresizer/issues) as well to start .
 
