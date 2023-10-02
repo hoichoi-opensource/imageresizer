@@ -47,5 +47,5 @@ Visit `http://localhost:3000` in your browser to access the application.
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome.  Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
 
