@@ -3,17 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Resizer using sharp </title>
-</head>
-<body>
-    <h1>Upload an Image</h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" required>
-        <button type="submit">Upload and Resize</button>
-    </form>
-    <p>Image Resizer using <a href="https://www.npmjs.com/package/sharp" target="_blank">sharp</a><br>
-    <p>Image Resizer using <a href="https://github.com/hoichoi-opensource/imageresizer" target="_blank">Github</a><br>
+    <title>Image Resizer using sharp</title>
+    <link href="/style.css" rel="stylesheet">
 
-</p>
+</head>
+<body >
+    <div id="page">
+        <h1 id="heading">Image Resizer</h1>
+            <div id="box">
+                <div class="box-content">
+                  <div class="plus-icon" >+</div>
+                  <form action="/upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="image" required id="upload">
+                    <button type="submit" id="upload_text">Upload and Resize</button>
+                </div>
+            </div>
+        <h1 id="">Upload an Image</h1>
+
+        </form>
+        <p>Image Resizer using <a href="https://www.npmjs.com/package/sharp" target="_blank">sharp</a></p>
+        <p>Image Resizer using <a href="https://github.com/hoichoi-opensource/imageresizer" target="_blank">Github</a></p>
+    </div>
 </body>
 </html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer Pro</title>
+    <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="header">
+        <h1>Image Resizer Pro</h1>
+    </div>
+    <div id="page">
+        <div id="upload-section">
+            <label for="file-upload" id="upload-button">
+                <div class="upload-icon">⬆</div>
+                Upload an Image
+            </label>
+            <input type="file" id="file-upload" name="image" required>
+        </div>
+        <div id="image-preview">
+            <img id="preview-image" src="" alt="Image Preview">
+            <button id="remove-button">X</button>
+        </div>
+        <div id="original-size">
+            Original Image Size: <span id="original-dimensions">0x0</span> pixels
+        </div>
+        <button id="upload-convert-button">Upload and Convert</button>
+        <div class="new-image-section">
+            <div class="image-details">
+                Aspect Ratio: <span id="aspect-ratio">16:9</span>
+            </div>
+            <div class="image-details">
+                Resolution: <span id="resolution">800x600</span> pixels
+            </div>
+            <div class="image-details">
+                Format: <span id="image-format">WebP</span>
+            </div>
+            <div class="image-details">
+                Size: <span id="image-size">0 KB</span>
+            </div>
+            <div class="image-details">
+                Reduction Percentage: <span id="reduction-percentage">0%</span>
+            </div>
+            <a id="download-button" href="#" download>
+                <div class="download-icon">⬇</div>
+                Download Resized Image
+            </a>
+        </div>
+    </div>
+    <div id="footer">
+        <a href="#">About</a> | <a href="#">Contact</a> | <a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a>
+    </div>
+</body>
+</html> -->
+
+
