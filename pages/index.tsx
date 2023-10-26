@@ -64,6 +64,19 @@ const Home: NextPage = () => {
                     width={250}
                     height={250}
                   />
+                  <a
+                    href={`data:image/${
+                      idx === 0 ? "webp" : "avif"
+                    };base64,${Buffer.from(buffer).toString("base64")}`}
+                    download={`Resized-${Math.round(
+                      idx === 0
+                        ? Number(image.sizeWebP)
+                        : Number(image.sizeAvif)
+                    )}-kb`}
+                    className="text-gray-700 hover:underline"
+                  >
+                    Download
+                  </a>
                   <p className="text-xs text-gray-500">
                     Dimensions: {image.dimension.width}x{image.dimension.height}
                   </p>
