@@ -3,6 +3,8 @@
 
 A simple Node.js application to upload images, resize them to specified dimensions or aspect ratios, and export them in both `webp` and `avif` formats.
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhoichoi-opensource%2Fimageresizer)
+
 ## Features
 
 - Upload images through a web interface.
