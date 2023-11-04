@@ -172,7 +172,7 @@ const Home: NextPage = () => {
           </a>
         </p>
         <p>
-          Image Resizer using{" "}
+          Get source at{" "}
           <a
             href="https://github.com/hoichoi-opensource/imageresizer"
             target="_blank"
