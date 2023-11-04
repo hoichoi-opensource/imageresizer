@@ -42,9 +42,10 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen items-center justify-between pt-16 pb-4">
+    <div className="flex flex-col h-screen items-center justify-between pt-16 pb-4 bg-black1" >
       {resizedImages ? (
         <div className="flex flex-col items-center justify-center gap-4 py-8">
+          
           <p className="text-indigo-600 hover:underline" onClick={handleBack}>
             Back
           </p>
@@ -73,17 +74,17 @@ const Home: NextPage = () => {
                         ? Number(image.sizeWebP)
                         : Number(image.sizeAvif)
                     )}-kb`}
-                    className="text-gray-700 hover:underline"
+                    className="text-blue1 hover:underline"
                   >
                     Download
                   </a>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-blue1">
                     Dimensions: {image.dimension.width}x{image.dimension.height}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-blue1">
                     Size: {idx === 0 ? image.sizeWebP : image.sizeAvif} KB
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-blue1">
                     Format: {idx === 0 ? "WebP" : "Avif"}
                   </p>
                 </div>
@@ -93,16 +94,17 @@ const Home: NextPage = () => {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-8">
-          <h1 className="text-2xl font-semibold">Upload an Image</h1>
+          <h1 className="text-5xl font-bold text-gold1">ImageResizer </h1>
+          <h1 className="text-2xl font-semibold text-blue1">Upload an Image</h1>
           <div className="flex flex-col items-center justify-center gap-4 w-[400px]">
             <div className="col-span-full">
-              <div className="w-[400px] h-[150px] mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+              <div className="w-[400px] h-[150px] mt-2 flex justify-center rounded-lg border border-dashed border-gold1 px-6 py-10">
                 {!file ? (
                   <div className="text-center">
-                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                    <div className="mt-4 flex text-sm leading-6 text-blue1">
                       <label
                         htmlFor="file-upload"
-                        className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                        className="relative cursor-pointer rounded-md bg-gold1 font-semibold text-blue1 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500 w-32"
                       >
                         <span>Upload a file</span>
                         <input
@@ -114,9 +116,9 @@ const Home: NextPage = () => {
                           accept="image/*"
                         />
                       </label>
-                      <p className="pl-1">or drag and drop</p>
+                      <p className="pl-2 text-blue1 ">or drag and drop</p>
                     </div>
-                    <p className="text-xs leading-5 text-gray-600">
+                    <p className="text-xs leading-5 text-orange1">
                       PNG or JPG.
                     </p>
                   </div>
@@ -132,10 +134,10 @@ const Home: NextPage = () => {
                       />
                     </div>
                     <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-sm font-medium text-blue1">
                         {file.name}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-blue1">
                         {(file.size / 1e6).toFixed(2)} MB
                       </div>
                       <button
@@ -151,7 +153,7 @@ const Home: NextPage = () => {
             </div>
             <button
               type="submit"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-slate-400 disabled:text-white disabled:cursor-not-allowed"
+              className="rounded-md bg-gold1 px-3 py-2 text-sm font-semibold text-blue1 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-slate-400 disabled:text-white disabled:cursor-not-allowed"
               disabled={!file || isLoading}
               onClick={handleUpload}
             >
@@ -160,7 +162,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       )}
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center text-blue1">
         <p>
           Image Resizer using{" "}
           <a
