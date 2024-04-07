@@ -1,6 +1,20 @@
 
 # Image Resizer
 
+![GitHub stars](https://img.shields.io/github/stars/hoichoi-opensource/imageresizer?style=social)
+![GitHub forks](https://img.shields.io/github/forks/hoichoi-opensource/imageresizer?style=social)
+![GitHub issues](https://img.shields.io/github/issues/hoichoi-opensource/imageresizer)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/hoichoi-opensource/imageresizer)
+![GitHub](https://img.shields.io/github/license/hoichoi-opensource/imageresizer)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/hoichoi-opensource/imageresizer)
+![GitHub contributors](https://img.shields.io/github/contributors/hoichoi-opensource/imageresizer)
+![GitHub last commit](https://img.shields.io/github/last-commit/hoichoi-opensource/imageresizer)
+![GitHub top language](https://img.shields.io/github/languages/top/hoichoi-opensource/imageresizer)
+![Dependencies](https://img.shields.io/librariesio/github/hoichoi-opensource/imageresizer)
+![Code size](https://img.shields.io/github/languages/code-size/hoichoi-opensource/imageresizer)
+![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)
+
+
 A simple Node.js application to upload images, resize them to specified dimensions or aspect ratios, and export them in both `webp` and `avif` formats.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhoichoi-opensource%2Fimageresizer)
