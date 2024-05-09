@@ -61,9 +61,28 @@ Visit `http://localhost:3000` in your browser to access the application.
 2. Click on the "Upload and Resize" button.
 3. The resized images in both `webp` and `avif` formats will be displayed along with their respective file sizes.
 
-## Contributing
 
-Pull requests are welcome.  Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
+## Contributing to the Project
+
+We welcome contributions from everyone who is interested in helping to improve this project! Whether it's fixing bugs, adding new features, improving documentation, or spreading the word, your help is appreciated.
+
+Here are some ways you can contribute:
+
+- **Reporting bugs**: If you find a bug, please report it by opening a new issue on GitHub.
+- **Suggesting enhancements**: Have an idea to make this project better? Share it with us by opening a new issue for discussion.
+- **Submitting changes**: Want to submit a fix or a feature? Great! Fork the repository, make your changes, and submit a pull request.
+
+### Getting Started
+
+1. **Fork the repository**: Click the 'Fork' button at the top right of this page to create your copy of the repository.
+2. **Clone your fork**: 
+3. **Create your feature branch**: 
+4. **Make your changes**: Implement the changes or improvements you propose.
+5. **Commit your changes**: 
+6. **Push to the branch**: 
+7. **Submit a pull request**: Go to your fork on GitHub and click the 'Pull Request' button to send your changes  review.
+
+Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
 
 Checkout the current [issues](https://github.com/hoichoi-opensource/imageresizer/issues) as well to start .
 
