@@ -82,7 +82,7 @@ Here are some ways you can contribute:
 6. **Push to the branch**: 
 7. **Submit a pull request**: Go to your fork on GitHub and click the 'Pull Request' button to send your changes  review.
 
-Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
+## Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
 
 Checkout the current [issues](https://github.com/hoichoi-opensource/imageresizer/issues) as well to start .
 
