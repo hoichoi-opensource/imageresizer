@@ -1,98 +1,123 @@
-import { T_Resize } from "@/common/types/resize";
-import multer from "multer";
-import type { NextApiRequest, NextApiResponse } from "next";
-import sharp from "sharp";
-
-// Set up multer for image uploads
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-// Dimensions to resize to
-const dimensions = [
-  { width: 2560, aspectRatio: 32 / 9 },
-  { width: 1280, aspectRatio: 16 / 9 },
-  { width: 1098, aspectRatio: 3 / 4 },
-  { width: 600, height: 338 },
-  { width: 1080, aspectRatio: 1 / 1 },
-  { width: 1080, aspectRatio: 9 / 16 },
-];
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { upload, runMiddleware, MulterRequest } from '@/lib/upload';
+import { processAllImages } from '@/lib/imageProcessor';
+import { UploadResponse, ErrorResponse, ImageProcessingError, MAX_FILE_SIZE } from '@/types';
+import { rateLimit } from '@/lib/rateLimit';
 
 export const config = {
   api: {
     bodyParser: false,
-    responseLimit: false,
+    responseLimit: '100mb',
   },
 };
 
-const uploadAndResizeFile = async (req: any, res: any) => {
-  upload.single("file")(req as any, res as any, async (err) => {
-    try {
-      if (err) {
-        throw new Error(err.message);
-      }
+const handleUpload = async (
+  req: MulterRequest,
+  res: NextApiResponse<UploadResponse | ErrorResponse>
+) => {
+  try {
+    // Run multer middleware
+    await runMiddleware(req, res, upload.single('file'));
 
-      // Access the uploaded file from req.file
-      const originalImage = req.file.buffer;
+    // Validate file exists
+    if (!req.file) {
+      throw new ImageProcessingError('No file uploaded', 400);
+    }
 
-      const resizedImages = [];
-      for (const dimension of dimensions) {
-        let resizeOptions: T_Resize = {};
+    // Validate file size (double-check)
+    if (req.file.size > MAX_FILE_SIZE) {
+      throw new ImageProcessingError(
+        `File size exceeds limit of ${MAX_FILE_SIZE / 1024 / 1024}MB`,
+        400
+      );
+    }
 
-        if (dimension.aspectRatio) {
-          resizeOptions.width = dimension.width;
-          resizeOptions.height = Math.round(
-            dimension.width / dimension.aspectRatio
-          );
-        } else {
-          resizeOptions.width = dimension.width;
-          resizeOptions.height = dimension.height;
-        }
+    // Get quality from query params (optional)
+    const quality = req.query.quality 
+      ? Math.min(100, Math.max(1, parseInt(req.query.quality as string)))
+      : undefined;
 
-        const resizedBufferWebp = await sharp(originalImage)
-          .webp()
-          .resize({
-            width: resizeOptions.width,
-            height: resizeOptions.height,
-            fit: "inside",
-          })
-          .toBuffer();
+    // Get selected dimensions from query params (optional)
+    const selectedDimensions = req.query.dimensions
+      ? (req.query.dimensions as string).split(',')
+      : undefined;
 
-        const resizedBufferAvif = await sharp(originalImage)
-          .avif()
-          .resize({
-            width: resizeOptions.width,
-            height: resizeOptions.height,
-            fit: "inside",
-          })
-          .toBuffer();
+    // Process images in parallel
+    const resizedImages = await processAllImages(
+      req.file.buffer,
+      selectedDimensions,
+      quality
+    );
 
-        const sizeWebP = (resizedBufferWebp.length / 1024).toFixed(2); // size in KB
-        const sizeAvif = (resizedBufferAvif.length / 1024).toFixed(2); // size in KB
-        resizedImages.push({
-          buffer: [resizedBufferWebp, resizedBufferAvif],
-          sizeWebP,
-          sizeAvif,
-          dimension: resizeOptions,
+    // Calculate original file size
+    const originalSize = (req.file.size / 1024).toFixed(2);
+
+    // Prepare response
+    const response: UploadResponse = {
+      original: {
+        name: req.file.originalname,
+        size: originalSize === '0.00' ? '0.01' : originalSize,
+      },
+      resized: resizedImages,
+    };
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.error('Upload error:', error);
+
+    if (error instanceof ImageProcessingError) {
+      res.status(error.statusCode).json({
+        error: error.message,
+      });
+    } else if (error instanceof Error) {
+      // Handle multer errors
+      if (error.message.includes('File too large')) {
+        res.status(400).json({
+          error: `File size exceeds limit of ${MAX_FILE_SIZE / 1024 / 1024}MB`,
+        });
+      } else if (error.message.includes('Unexpected field')) {
+        res.status(400).json({
+          error: 'Invalid field name. Expected "file"',
+        });
+      } else {
+        res.status(500).json({
+          error: 'Failed to process image',
+          details: process.env.NODE_ENV === 'development' ? error.message : undefined,
         });
       }
-      return res.status(200).json(resizedImages);
-    } catch (error: any) {
-      return res
-        .status(500)
-        .json({ error: error.message || "Something went wrong" });
+    } else {
+      res.status(500).json({
+        error: 'An unexpected error occurred',
+      });
     }
-  });
+  }
 };
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  req.method === "POST"
-    ? uploadAndResizeFile(req, res)
-    : res.status(405).json({ error: "Method not allowed." });
+const rateLimiter = rateLimit(60 * 1000, 10); // 10 requests per minute
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<UploadResponse | ErrorResponse>
+) {
+  // Set CORS headers if needed
+  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'Method not allowed. Use POST.' });
+    return;
+  }
+
+  // Apply rate limiting
+  if (!rateLimiter(req, res)) {
+    return;
+  }
+
+  await handleUpload(req as MulterRequest, res);
 }
-
-export type T_Api_Res_ResizedImages = {
-  buffer: Buffer[];
-  sizeWebP: string;
-  sizeAvif: string;
-  dimension: T_Resize;
-};

@@ -15,20 +15,35 @@
 ![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)
 
 
-A simple Node.js application to upload images, resize them to specified dimensions or aspect ratios, and export them in both `webp` and `avif` formats.
+A high-performance Next.js application to upload images, resize them to specified dimensions or aspect ratios, and export them in both `webp` and `avif` formats. Built with TypeScript, React, and Sharp for optimal performance and type safety.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhoichoi-opensource%2Fimageresizer)
 
 ## Features
 
-- Upload images through a web interface.
-- Resize images based on pixel dimensions or aspect ratios.
-- Export resized images in `webp` and `avif` formats.
-- Retain and display all historically uploaded and resized images.
+- 🚀 **Fast & Efficient**: Parallel image processing with Sharp
+- 🎨 **Multiple Formats**: Export in WebP and AVIF formats
+- 📐 **Preset Dimensions**: 6 predefined sizes (Ultra-wide, Wide, Portrait, Fixed, Square, Vertical)
+- 🎯 **Customizable**: Select specific dimensions and adjust quality
+- 🔒 **Secure**: Input validation, rate limiting, and security headers
+- 📱 **Responsive**: Works on all devices
+- 🎭 **Preview**: See your image before uploading
+- 📊 **Progress Tracking**: Real-time upload progress
+- ⚡ **Type Safe**: Built with TypeScript for reliability
+
+## What's New
+
+### Production-Ready Improvements
+- ✅ **TypeScript**: Fully typed with no `any` types
+- ✅ **Security**: Rate limiting, CORS, input validation
+- ✅ **Performance**: Parallel processing, optimized builds
+- ✅ **UX**: Progress indicators, error messages, image preview
+- ✅ **Features**: Quality control, dimension selection
+- ✅ **SEO**: Meta tags and robots.txt
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/)
+- [Node.js](https://nodejs.org/) (v18+)
 
 ## Setup & Installation
 
@@ -36,7 +51,7 @@ A simple Node.js application to upload images, resize them to specified dimensio
 
 ```bash
 git clone https://github.com/hoichoi-opensource/imageresizer.git
-cd image-resizer
+cd imageresizer
 ```
 
 2. Install the required packages:
@@ -47,19 +62,47 @@ npm install
 
 ## Running the Application
 
-Start the server:
+Start the development server:
 
 ```bash
-node server.js
+npm run dev
+# or
+yarn dev
 ```
 
 Visit `http://localhost:3000` in your browser to access the application.
 
+For production build:
+
+```bash
+npm run build
+npm start
+# or
+yarn build
+yarn start
+```
+
 ## Usage
 
-1. Click on the "Choose File" button to select an image.
-2. Click on the "Upload and Resize" button.
-3. The resized images in both `webp` and `avif` formats will be displayed along with their respective file sizes.
+1. **Select an image**: Click the upload area or drag & drop an image
+2. **Configure settings** (optional):
+   - Adjust quality (1-100%)
+   - Select specific dimensions
+3. **Upload**: Click "Upload and Resize"
+4. **Download**: Click download buttons for each resized image
+
+### Supported Formats
+- Input: JPEG, PNG, WebP, AVIF, TIFF, BMP, SVG
+- Output: WebP and AVIF
+- Max file size: 50MB
+
+### Available Dimensions
+- **Ultra Wide** (2560px @ 32:9)
+- **Wide** (1280px @ 16:9)
+- **Portrait** (1098px @ 3:4)
+- **Fixed** (600×338px)
+- **Square** (1080px @ 1:1)
+- **Vertical** (1080px @ 9:16)
 
 
 ## Contributing to the Project
